@@ -1,3 +1,8 @@
+# Track only the implementation directory and this ignore configuration.
+/*
+!/cs336_basics/
+!/.gitignore
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
