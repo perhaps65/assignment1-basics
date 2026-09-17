@@ -126,6 +126,7 @@ class MultiHeadSelfAttentionWithRoPE(nn.Module):
         k = k.reshape(*k.shape[:-1], self.num_heads, self.head_dim).transpose(-2, -3)
         v = v.reshape(*v.shape[:-1], self.num_heads, self.head_dim).transpose(-2, -3)
 
+    
         q = self.rope(q, token_positions)
         k = self.rope(k, token_positions)
         

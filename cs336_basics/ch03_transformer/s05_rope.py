@@ -24,7 +24,11 @@ class RotaryPositionalEmbedding(nn.Module):
         even = x[..., 0::2]
         odd = x[..., 1::2]
         # b h t d_h/2
-        token_positions = token_positions.unsqueeze(-2)
+        if token_positions is None:
+            # 无论是不是多头 [-2]都是T,后面计算cos sin都可以广播,
+            token_positions = torch.arange(x.shape[-2]) 
+        else:
+            token_positions = token_positions.unsqueeze(-2)
         cos = self.cos[token_positions]
         sin = self.sin[token_positions]
         # b t d_h/2
