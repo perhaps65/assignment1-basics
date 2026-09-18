@@ -7,15 +7,24 @@ from typing import BinaryIO
 
 from torch import nn
 from torch.optim import Optimizer
-
+import torch
 
 def save_checkpoint(
     model: nn.Module, optimizer: Optimizer, iteration: int,
     out: str | PathLike[str] | BinaryIO,
 ) -> None:
-    raise NotImplementedError
+    dict = {
+        "model":model.state_dict(),
+        "optimizer":optimizer.state_dict(),
+        "iteration":iteration
+    }
+    torch.save(dict, out)
 
 def load_checkpoint(
     src: str | PathLike[str] | BinaryIO, model: nn.Module, optimizer: Optimizer,
 ) -> int:
-    raise NotImplementedError
+    dict = torch.load(src, weights_only=True)
+    model.load_state_dict(dict["model"])
+    optimizer.load_state_dict(dict["optimizer"])
+    return dict["iteration"]
+
